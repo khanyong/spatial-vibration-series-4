@@ -3,7 +3,7 @@ message: "If you use this software, please cite it as below."
 authors:
   - family-names: "Yoo"
     given-names: "Kwang Yong"
-title: "Mechanics of Spatial Vibration IV: [Title Placeholder]"
+title: "Geomechanical Simulation Sandbox for Spatial Vibration Mechanics IV"
 version: 1.0.0
 doi: 10.5281/zenodo.[Placeholder]
 date-released: 2026-07-19

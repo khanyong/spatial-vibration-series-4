@@ -4,29 +4,1095 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Geomechanical Simulation Sandbox for Spatial Vibration Mechanics IV</title>
+  <!-- Google Fonts: JetBrains Mono & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  
   <style>
+    :root {
+      --bg-color: #09090b;
+      --card-bg: #18181b;
+      --border-color: #27272a;
+      --text-main: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --accent-blue: #3b82f6;
+      --accent-red: #ef4444;
+      --accent-purple: #a855f7;
+      --accent-amber: #fbbf24;
+      --accent-emerald: #10b981;
+      --accent-fuchsia: #d946ef;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      background-color: #09090b;
-      color: #f4f4f5;
-      font-family: system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
       display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1080px;
+      background-color: #0c0c0e;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    header {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      header {
+        flex-direction: row;
+        align-items: center;
+      }
+    }
+
+    h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-main);
+    }
+
+    .subtitle {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .tab-group {
+      display: flex;
+      background-color: #18181b;
+      padding: 0.25rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      gap: 0.25rem;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.5rem 0.85rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-main);
+    }
+
+    .tab-btn.active {
+      color: #fff;
+    }
+
+    .tab-btn.active.knot { background-color: var(--accent-blue); }
+    .tab-btn.active.su3 { background-color: var(--accent-purple); }
+    .tab-btn.active.exclusion { background-color: var(--accent-emerald); }
+
+    .main-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 992px) {
+      .main-layout {
+        flex-direction: row;
+      }
+    }
+
+    .canvas-container {
+      flex: 1;
+      background-color: rgba(9, 9, 11, 0.5);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 0.5rem;
+      display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 3/2;
     }
-    .container {
-      text-align: center;
-      padding: 2rem;
-      border: 1px solid #27272a;
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
       border-radius: 8px;
+      background-color: #09090b;
+      cursor: grab;
+    }
+
+    canvas:active {
+      cursor: grabbing;
+    }
+
+    .tip-text {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      font-size: 9px;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      pointer-events: none;
+    }
+
+    .controls-panel {
+      width: 100%;
+      max-width: 320px;
+      background-color: rgba(24, 24, 27, 0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .panel-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .control-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .control-val {
+      font-weight: 700;
+    }
+
+    .control-val.knot { color: var(--accent-blue); }
+    .control-val.su3 { color: var(--accent-purple); }
+    .control-val.exclusion { color: var(--accent-emerald); }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 4px;
+      background: #27272a;
+      border-radius: 2px;
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+    }
+
+    /* Range input coloring based on active tab */
+    .container[data-mode="knot"] input[type="range"]::-webkit-slider-thumb { background: var(--accent-blue); }
+    .container[data-mode="su3"] input[type="range"]::-webkit-slider-thumb { background: var(--accent-purple); }
+    .container[data-mode="exclusion"] input[type="range"]::-webkit-slider-thumb { background: var(--accent-emerald); }
+
+    .btn-group {
+      display: grid;
+      grid-template-cols: 1fr 1fr;
+      gap: 0.5rem;
+    }
+
+    .action-btn {
+      background-color: #18181b;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 0.6rem;
+      font-size: 0.68rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .action-btn:hover {
+      background-color: #27272a;
+      color: var(--text-main);
+    }
+
+    .action-btn.active {
+      color: #fff;
+      border-color: var(--accent-purple);
+      background-color: rgba(168, 85, 247, 0.15);
+    }
+
+    .action-btn.reset-btn {
+      grid-column: span 2;
+      border-color: #ef444455;
+      background-color: rgba(239, 68, 68, 0.05);
+      color: #fca5a5;
+    }
+
+    .action-btn.reset-btn:hover {
+      background-color: rgba(239, 68, 68, 0.15);
+      border-color: #ef4444;
+    }
+
+    .theory-box {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .theory-box strong {
+      color: var(--text-main);
+    }
+
+    .hidden {
+      display: none !important;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Mechanics of Spatial Vibration IV: Simulation Sandbox</h1>
-    <p>This is a placeholder for the fourth series simulation.</p>
+
+  <div class="container" id="appContainer" data-mode="knot">
+    
+    <header>
+      <div>
+        <h1>TOPOLOGICAL TENSOR KNOTS & HADRONIC RESIDUES</h1>
+        <div class="subtitle">Geomechanical Simulation Sandbox for Spatial Vibration Mechanics IV</div>
+      </div>
+      <div class="tab-group">
+        <button class="tab-btn active knot" onclick="changeMode('knot')">KNOT</button>
+        <button class="tab-btn su3" onclick="changeMode('su3')">SU(3)</button>
+        <button class="tab-btn exclusion" onclick="changeMode('exclusion')">EXCLUSION</button>
+      </div>
+    </header>
+
+    <div class="main-layout">
+      
+      <!-- Canvas Screen -->
+      <div class="canvas-container">
+        <canvas id="simCanvas"></canvas>
+        <div class="tip-text" id="tipText">💡 Drag canvas to rotate camera angle</div>
+      </div>
+
+      <!-- Controls Console -->
+      <div class="controls-panel">
+        
+        <!-- MODE A: KNOT CONTROLS -->
+        <div id="panel-knot" class="mode-panel">
+          <div class="panel-title" style="margin-bottom: 1.25rem;">KNOT & CONFINEMENT CONTROLS</div>
+          
+          <div class="control-group" style="margin-bottom: 1.25rem;">
+            <div class="control-label">
+              <span>Topological Elongation (r):</span>
+              <span class="control-val knot" id="val-elongation">30%</span>
+            </div>
+            <input type="range" id="slider-elongation" min="0" max="95" value="30">
+          </div>
+
+          <div class="control-group" style="margin-bottom: 1.25rem;">
+            <div class="control-label">
+              <span>Geometric Mass Rigidity (κ):</span>
+              <span class="control-val knot" id="val-rigidity">1.2</span>
+            </div>
+            <input type="range" id="slider-rigidity" min="10" max="30" value="12">
+          </div>
+
+          <div class="btn-group" style="margin-bottom: 1rem;">
+            <button class="action-btn reset-btn" id="btn-reset-knot" onclick="resetKnot()">RESET KNOT BOUNDARY</button>
+          </div>
+
+          <div class="theory-box">
+            <strong>Topological Flux Quantization:</strong><br>
+            By Section II.B, the tube cross-section ($A$) remains constant. Consequently, elongation stretches the knot boundary under constant volume, driving string tension linearly ($V(r) \sim \sigma r$) until topology fractures.
+          </div>
+        </div>
+
+        <!-- MODE B: SU(3) CONTROLS -->
+        <div id="panel-su3" class="mode-panel hidden">
+          <div class="panel-title" style="margin-bottom: 1rem;">SU(3) HADRON SELECTOR</div>
+          
+          <div class="btn-group" style="grid-template-cols: 1fr 1fr; gap: 0.5rem; margin-bottom: 1.25rem;">
+            <button class="action-btn active" id="btn-hadron-proton" onclick="selectHadron('proton')">PROTON</button>
+            <button class="action-btn" id="btn-hadron-neutron" onclick="selectHadron('neutron')">NEUTRON</button>
+            <button class="action-btn" id="btn-hadron-pion" onclick="selectHadron('pion')">PION</button>
+            <button class="action-btn" id="btn-hadron-omega" onclick="selectHadron('omega')">OMEGA</button>
+          </div>
+
+          <div class="control-group" style="margin-bottom: 1.25rem;">
+            <div class="control-label">
+              <span>Vacuum Compression Ratio:</span>
+              <span class="control-val su3" id="val-compression">50%</span>
+            </div>
+            <input type="range" id="slider-compression" min="0" max="100" value="50">
+          </div>
+
+          <div class="theory-box">
+            <strong>SU(3) Standing Waves:</strong><br>
+            Resonant particles represent fixed coordinate standing-wave eigen-nodes. Space vibrations vibrate in place, manifesting discrete coordinates where amplitude peaks, isomorphic to SU(3) matrix eigenvalues.
+          </div>
+        </div>
+
+        <!-- MODE C: EXCLUSION CONTROLS -->
+        <div id="panel-exclusion" class="mode-panel hidden">
+          <div class="panel-title" style="margin-bottom: 1.25rem;">PAULI EXCLUSION CONTROLS</div>
+
+          <div class="control-group" style="margin-bottom: 1.25rem;">
+            <div class="control-label">
+              <span>Inter-Node Distance:</span>
+              <span class="control-val exclusion" id="val-distance">180</span>
+            </div>
+            <input type="range" id="slider-distance" min="80" max="250" value="180">
+          </div>
+
+          <div class="control-group" style="margin-bottom: 1.25rem;">
+            <div class="control-label">
+              <span>Spatial Rotation Angle (θ):</span>
+              <span class="control-val exclusion" id="val-phase">360°</span>
+            </div>
+            <input type="range" id="slider-phase" min="0" max="720" value="360">
+          </div>
+
+          <div class="theory-box">
+            <strong>Spinor 720° Symmetry:</strong><br>
+            Spinors require a 720° rotation to return to their initial state. Rotating space by 360° flips phase (destructive overlap explosion), while a full 720° restores constructive coherence.
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
   </div>
+
+  <script>
+    // State variables
+    let simMode = 'knot';
+    
+    // Mode A: Knot States
+    let elongation = 0.3;
+    let isRuptured = false;
+    let massRigidity = 1.2;
+    let tensionHistory = [];
+    let particles = [];
+    let shockwaveRadius = 0;
+    
+    // Mode B: SU(3) States
+    let selectedHadron = 'proton';
+    let compressionRatio = 0.5;
+    
+    // Mode C: Exclusion States
+    let nodeDistance = 180;
+    let berryPhaseDiff = Math.PI; // (360 degrees rotation / 2)
+
+    // View Angle variables
+    let angleY = 0.4;
+    let angleX = 0.2;
+    let isDragging = false;
+    let prevMouseX = 0;
+    let prevMouseY = 0;
+
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+    let frameCount = 0;
+
+    // Initial setup with Retina support
+    const dpr = window.devicePixelRatio || 1;
+    let width = 600;
+    let height = 400;
+
+    function setupCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      width = rect.width || 600;
+      height = rect.height || 400;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      ctx.scale(dpr, dpr);
+    }
+    setupCanvas();
+    window.addEventListener('resize', setupCanvas);
+
+    // Mouse interactions for dragging
+    canvas.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      prevMouseX = e.clientX;
+      prevMouseY = e.clientY;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const dx = e.clientX - prevMouseX;
+      const dy = e.clientY - prevMouseY;
+      angleY += dx * 0.007;
+      angleX = Math.max(-Math.PI / 2.5, Math.min(Math.PI / 2.5, angleX - dy * 0.007));
+      prevMouseX = e.clientX;
+      prevMouseY = e.clientY;
+    });
+
+    window.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+
+    window.addEventListener('mouseleave', () => {
+      isDragging = false;
+    });
+
+    // Inputs listeners
+    // Mode A Inputs
+    const sliderElongation = document.getElementById('slider-elongation');
+    sliderElongation.addEventListener('input', (e) => {
+      elongation = parseInt(e.target.value) / 100;
+      document.getElementById('val-elongation').innerText = `${e.target.value}%`;
+      if (elongation >= 0.95 && !isRuptured) {
+        ruptureKnot();
+      }
+    });
+
+    const sliderRigidity = document.getElementById('slider-rigidity');
+    sliderRigidity.addEventListener('input', (e) => {
+      massRigidity = parseInt(e.target.value) / 10;
+      document.getElementById('val-rigidity').innerText = massRigidity.toFixed(1);
+    });
+
+    // Mode B Inputs
+    const sliderCompression = document.getElementById('slider-compression');
+    sliderCompression.addEventListener('input', (e) => {
+      compressionRatio = parseInt(e.target.value) / 100;
+      document.getElementById('val-compression').innerText = `${e.target.value}%`;
+    });
+
+    // Mode C Inputs
+    const sliderDistance = document.getElementById('slider-distance');
+    sliderDistance.addEventListener('input', (e) => {
+      nodeDistance = parseInt(e.target.value);
+      document.getElementById('val-distance').innerText = e.target.value;
+    });
+
+    const sliderPhase = document.getElementById('slider-phase');
+    sliderPhase.addEventListener('input', (e) => {
+      const spatialDegrees = parseInt(e.target.value);
+      // Spinor logic: Berry phase difference is exactly half of spatial rotation angle
+      berryPhaseDiff = (spatialDegrees * Math.PI / 180) / 2;
+      document.getElementById('val-phase').innerText = `${spatialDegrees}°`;
+    });
+
+    // UI helper functions
+    function changeMode(mode) {
+      simMode = mode;
+      document.getElementById('appContainer').setAttribute('data-mode', mode);
+      
+      // Tab Buttons
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelector(`.tab-btn.${mode}`).classList.add('active');
+
+      // Panels
+      document.querySelectorAll('.mode-panel').forEach(p => p.classList.add('hidden'));
+      document.getElementById(`panel-${mode}`).classList.remove('hidden');
+
+      // Tip Text
+      const tipText = document.getElementById('tipText');
+      if (mode === 'knot') {
+        tipText.classList.add('hidden');
+      } else {
+        tipText.classList.remove('hidden');
+      }
+
+      resetSimulation();
+    }
+
+    function resetSimulation() {
+      particles = [];
+      shockwaveRadius = 0;
+      if (simMode === 'knot') {
+        isRuptured = false;
+        elongation = 0.3;
+        sliderElongation.value = 30;
+        document.getElementById('val-elongation').innerText = '30%';
+        tensionHistory = [];
+      }
+    }
+
+    function resetKnot() {
+      isRuptured = false;
+      elongation = 0.3;
+      sliderElongation.value = 30;
+      document.getElementById('val-elongation').innerText = '30%';
+      tensionHistory = [];
+      particles = [];
+      shockwaveRadius = 0;
+    }
+
+    function ruptureKnot() {
+      isRuptured = true;
+      shockwaveRadius = 10; // Trigger W/Z shockwave ring
+      const cx = width / 2;
+      const cy = height / 2 - 20;
+
+      for (let i = 0; i < 40; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 2 + Math.random() * 5;
+        particles.push({
+          x: cx,
+          y: cy,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          size: 2 + Math.random() * 3,
+          color: '#ef4444',
+          alpha: 1,
+          life: 1.0
+        });
+      }
+    }
+
+    function selectHadron(hadron) {
+      selectedHadron = hadron;
+      document.querySelectorAll('#panel-su3 .action-btn').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(`btn-hadron-${hadron}`).classList.add('active');
+    }
+
+    // 3D Projection
+    function project3D(x, y, z, cx, cy, scale) {
+      // Y-axis rotation
+      const cosY = Math.cos(angleY);
+      const sinY = Math.sin(angleY);
+      let x1 = x * cosY - z * sinY;
+      let z1 = x * sinY + z * cosY;
+
+      // X-axis rotation
+      const cosX = Math.cos(angleX);
+      const sinX = Math.sin(angleX);
+      let y2 = y * cosX - z1 * sinX;
+      let z2 = y * sinX + z1 * cosX;
+
+      const fov = 350;
+      const projScale = fov / (fov + z2);
+      return {
+        x: cx + x1 * projScale * scale,
+        y: cy + y2 * projScale * scale,
+        depth: z2
+      };
+    }
+
+    // Loop
+    function animate() {
+      frameCount++;
+      const t = frameCount * 0.02;
+      const cx = width / 2;
+      const cy = height / 2 - 20;
+
+      // Clean background (source-over mode)
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.fillStyle = '#09090b';
+      ctx.fillRect(0, 0, width, height);
+
+      if (simMode === 'knot') {
+        ctx.globalCompositeOperation = 'screen';
+        const kScale = 45;
+        const currentTension = massRigidity * (1.0 + elongation * 4.0);
+
+        tensionHistory.push(currentTension);
+        if (tensionHistory.length > 100) tensionHistory.shift();
+
+        if (!isRuptured) {
+          const knotPoints = [];
+          const numPoints = 120;
+          const stretchX = 1.0 + elongation * 1.5;
+          const stretchY = 1.0; // Locked by Topological Flux Quantization (II.B)
+
+          for (let i = 0; i <= numPoints; i++) {
+            const theta = (i / numPoints) * Math.PI * 2 * 3;
+            let kx = (Math.sin(theta) + 2 * Math.sin(2 * theta)) * stretchX;
+            let ky = (Math.cos(theta) - 2 * Math.cos(2 * theta)) * stretchY;
+            let kz = -Math.sin(3 * theta) * (1.0 + elongation * 0.8);
+            knotPoints.push({ x: kx, y: ky, z: kz });
+          }
+
+          const projPoints = knotPoints.map(p => project3D(p.x, p.y, p.z, cx, cy, kScale));
+
+          // Outer glowing tube
+          ctx.beginPath();
+          projPoints.forEach((p, idx) => {
+            if (idx === 0) ctx.moveTo(p.x, p.y);
+            else ctx.lineTo(p.x, p.y);
+          });
+          ctx.closePath();
+          ctx.lineWidth = 14 + elongation * 4;
+          ctx.strokeStyle = `rgba(59, 130, 246, ${0.15 - elongation * 0.05})`;
+          ctx.stroke();
+
+          // Mid tube (blue to red based on tension)
+          ctx.lineWidth = 6 + elongation * 2;
+          const tensionHue = 210 - elongation * 210;
+          ctx.strokeStyle = `hsla(${tensionHue}, 90%, 60%, 0.5)`;
+          ctx.stroke();
+
+          // Core fiber
+          ctx.lineWidth = 2;
+          ctx.strokeStyle = '#ffffff';
+          ctx.stroke();
+
+          // Vorticity cores (constant blue for asymptotic freedom)
+          projPoints.forEach((p, idx) => {
+            if (idx % 20 === 0) {
+              const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 8);
+              grad.addColorStop(0, '#ffffff');
+              grad.addColorStop(0.3, `hsla(210, 90%, 65%, 0.8)`);
+              grad.addColorStop(1, 'rgba(0,0,0,0)');
+              ctx.fillStyle = grad;
+              ctx.beginPath();
+              ctx.arc(p.x, p.y, 8, 0, Math.PI * 2);
+              ctx.fill();
+            }
+          });
+
+          // Overlay texts
+          ctx.globalCompositeOperation = 'source-over';
+          ctx.font = '9px monospace';
+          ctx.fillStyle = 'rgba(255,255,255,0.4)';
+          ctx.fillText(`Knot helicity: H = 1.0 (h_0)`, 20, 30);
+          ctx.fillText(`Effective Tension (T): ${currentTension.toFixed(2)} N`, 20, 45);
+          ctx.fillText(`Core Potential (Q_s): canceled (T -> 0)`, 20, 60);
+
+        } else {
+          // Render rupture (confinement restored)
+          const numPoints = 80;
+          const separation = 80 + Math.sin(t * 2) * 5;
+
+          // Hadron 1 (Left loop)
+          const knot1 = [];
+          for (let i = 0; i <= numPoints; i++) {
+            const theta = (i / numPoints) * Math.PI * 2;
+            knot1.push({
+              x: -separation/kScale + Math.cos(theta) * 0.8,
+              y: Math.sin(theta) * 0.8,
+              z: Math.sin(theta * 2) * 0.3
+            });
+          }
+          const proj1 = knot1.map(p => project3D(p.x, p.y, p.z, cx, cy, kScale));
+
+          // Hadron 2 (Right loop)
+          const knot2 = [];
+          for (let i = 0; i <= numPoints; i++) {
+            const theta = (i / numPoints) * Math.PI * 2;
+            knot2.push({
+              x: separation/kScale + Math.cos(theta) * 0.8,
+              y: Math.sin(theta) * 0.8,
+              z: Math.cos(theta * 2) * 0.3
+            });
+          }
+          const proj2 = knot2.map(p => project3D(p.x, p.y, p.z, cx, cy, kScale));
+
+          ctx.beginPath();
+          proj1.forEach((p, idx) => {
+            if (idx === 0) ctx.moveTo(p.x, p.y);
+            else ctx.lineTo(p.x, p.y);
+          });
+          ctx.closePath();
+          ctx.lineWidth = 8;
+          ctx.strokeStyle = 'rgba(59, 130, 246, 0.4)';
+          ctx.stroke();
+          ctx.lineWidth = 1.5;
+          ctx.strokeStyle = '#60a5fa';
+          ctx.stroke();
+
+          ctx.beginPath();
+          proj2.forEach((p, idx) => {
+            if (idx === 0) ctx.moveTo(p.x, p.y);
+            else ctx.lineTo(p.x, p.y);
+          });
+          ctx.closePath();
+          ctx.lineWidth = 8;
+          ctx.strokeStyle = 'rgba(16, 185, 129, 0.4)';
+          ctx.stroke();
+          ctx.lineWidth = 1.5;
+          ctx.strokeStyle = '#34d399';
+          ctx.stroke();
+
+          ctx.globalCompositeOperation = 'source-over';
+          ctx.font = '9px monospace';
+          ctx.fillStyle = 'rgba(255,255,255,0.4)';
+          ctx.fillText(`Topology Severed: Color Confinement Restored`, 20, 30);
+          ctx.fillText(`Yield Energy (S_crit) Released as W/Z Boson Tensor Shockwave`, 20, 45);
+          ctx.fillText(`New boundaries formed: H1 = 1, H2 = 1`, 20, 60);
+        }
+
+        // Draw rupture spark particles
+        ctx.globalCompositeOperation = 'screen';
+        particles.forEach((p) => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.life -= 0.02;
+          p.alpha = Math.max(0, p.life);
+
+          ctx.fillStyle = `rgba(239, 68, 74, ${p.alpha})`;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        particles = particles.filter(p => p.life > 0);
+
+        // W/Z Boson Shockwave Ring
+        if (shockwaveRadius > 0 && shockwaveRadius < width * 1.5) {
+          ctx.globalCompositeOperation = 'screen';
+          const shockwaveAlpha = Math.max(0, 1.0 - shockwaveRadius / (width * 0.8));
+          ctx.strokeStyle = `rgba(239, 68, 68, ${shockwaveAlpha})`;
+          ctx.lineWidth = 15 * shockwaveAlpha;
+          ctx.beginPath();
+          ctx.arc(cx, cy, shockwaveRadius, 0, Math.PI * 2);
+          ctx.stroke();
+          
+          ctx.fillStyle = `rgba(255, 255, 255, ${shockwaveAlpha})`;
+          ctx.font = 'bold 12px monospace';
+          ctx.textAlign = 'center';
+          ctx.fillText("W/Z TENSOR SHOCKWAVE TRIGGERED", cx, cy - shockwaveRadius - 10);
+          ctx.textAlign = 'left';
+          
+          shockwaveRadius += 12;
+        }
+
+        // String tension history graph
+        ctx.globalCompositeOperation = 'source-over';
+        const gx = width - 180;
+        const gy = height - 110;
+        const gw = 160;
+        const gh = 80;
+
+        ctx.fillStyle = 'rgba(24, 24, 27, 0.8)';
+        ctx.fillRect(gx, gy, gw, gh);
+        ctx.strokeStyle = 'rgba(39, 39, 42, 1)';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(gx, gy, gw, gh);
+
+        ctx.fillStyle = 'rgba(161, 161, 170, 0.6)';
+        ctx.font = '8px monospace';
+        ctx.fillText("String Tension (\u03c3)", gx + 5, gy + 12);
+
+        ctx.strokeStyle = '#ef4444';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        tensionHistory.forEach((val, idx) => {
+          const normY = ((val - 1.0) / 5.0) * (gh - 25);
+          const px = gx + (idx / 100) * gw;
+          const py = gy + gh - 10 - normY;
+          if (idx === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        });
+        ctx.stroke();
+
+      } else if (simMode === 'su3') {
+        ctx.globalCompositeOperation = 'screen';
+        const gridSize = 7;
+        const step = 25;
+        const gridScale = 1.2;
+
+        let freqMultiplier = 1;
+        let axisWeight = { x: 1, y: 1, z: 1 };
+        let nodeComplexity = 1;
+        let hadronLabel = "";
+
+        if (selectedHadron === 'proton') {
+          freqMultiplier = 1.5;
+          axisWeight = { x: 1.0, y: 1.0, z: 0.5 };
+          nodeComplexity = 3;
+          hadronLabel = "Proton (uud) - 3-Axis Resonance (Octet)";
+        } else if (selectedHadron === 'neutron') {
+          freqMultiplier = 1.48;
+          axisWeight = { x: 0.5, y: 1.0, z: 1.0 };
+          nodeComplexity = 3.2;
+          hadronLabel = "Neutron (udd) - Phase-Shift Resonance (Octet)";
+        } else if (selectedHadron === 'pion') {
+          freqMultiplier = 0.8;
+          axisWeight = { x: 1.2, y: 0.0, z: 1.2 };
+          nodeComplexity = 1.5;
+          hadronLabel = "Pion (\u03c0\u207a) - 2-Axis Flat Resonance (Meson)";
+        } else if (selectedHadron === 'omega') {
+          freqMultiplier = 2.2;
+          axisWeight = { x: 1.5, y: 1.5, z: 1.5 };
+          nodeComplexity = 5.0;
+          hadronLabel = "Omega (\u03a9\u207b) - High-Frequency Resonance (Decuplet)";
+        }
+
+        const gridPoints3D = [];
+        const half = Math.floor(gridSize / 2);
+
+        for (let i = 0; i < gridSize; i++) {
+          const row = [];
+          for (let j = 0; j < gridSize; j++) {
+            const col = [];
+            for (let k = 0; k < gridSize; k++) {
+              const ox = i - half;
+              const oy = j - half;
+              const oz = k - half;
+              const gx = ox * step;
+              const gy = oy * step;
+              const gz = oz * step;
+
+              // Standing wave amplitude equation (oscillating amplitude, static nodes)
+              const spatialAmp = Math.cos(ox * 0.4 * axisWeight.x) * Math.cos(oy * 0.4 * axisWeight.y) * Math.cos(oz * 0.4 * axisWeight.z);
+              const wave = spatialAmp * Math.cos(t * 1.5 * freqMultiplier) * (20 * (1.0 + compressionRatio));
+
+              col.push({
+                x: gx * axisWeight.x,
+                y: gy * axisWeight.y,
+                z: gz * axisWeight.z,
+                ox, oy, oz
+              });
+            }
+            row.push(col);
+          }
+          gridPoints3D.push(row);
+        }
+
+        const projectedMatrix = [];
+        for (let i = 0; i < gridSize; i++) {
+          const row = [];
+          for (let j = 0; j < gridSize; j++) {
+            const col = [];
+            for (let k = 0; k < gridSize; k++) {
+              const p = gridPoints3D[i][j][k];
+              const proj = project3D(p.x, p.y, p.z, cx, cy, gridScale);
+              const spatialAmp = Math.cos(p.ox * 0.4 * axisWeight.x) * Math.cos(p.oy * 0.4 * axisWeight.y) * Math.cos(p.oz * 0.4 * axisWeight.z);
+              const isEigenNode = Math.abs(spatialAmp) > 0.8;
+
+              col.push({
+                x: proj.x,
+                y: proj.y,
+                ox: p.ox,
+                oy: p.oy,
+                oz: p.oz,
+                waveVal: spatialAmp * Math.cos(t * 1.5 * freqMultiplier),
+                isEigenNode: isEigenNode
+              });
+            }
+            row.push(col);
+          }
+          projectedMatrix.push(row);
+        }
+
+        // Draw connecting filaments (Wireframe spatial lines)
+        ctx.strokeStyle = 'rgba(59, 130, 246, 0.08)';
+        ctx.lineWidth = 0.8;
+        for (let i = 0; i < gridSize; i++) {
+          for (let j = 0; j < gridSize; j++) {
+            for (let k = 0; k < gridSize; k++) {
+              const p = projectedMatrix[i][j][k];
+              if (i < gridSize - 1) {
+                const px = projectedMatrix[i+1][j][k];
+                ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(px.x, px.y); ctx.stroke();
+              }
+              if (j < gridSize - 1) {
+                const py = projectedMatrix[i][j+1][k];
+                ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(py.x, py.y); ctx.stroke();
+              }
+              if (k < gridSize - 1) {
+                const pz = projectedMatrix[i][j][k+1];
+                ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(pz.x, pz.y); ctx.stroke();
+              }
+            }
+          }
+        }
+
+        // Render resonance junction nodes (vibrating amplitude, fixed coordinates)
+        for (let i = 0; i < gridSize; i++) {
+          for (let j = 0; j < gridSize; j++) {
+            for (let k = 0; k < gridSize; k++) {
+              const p = projectedMatrix[i][j][k];
+
+              if (p.isEigenNode) {
+                const glow = Math.abs(Math.cos(t * 1.5 * freqMultiplier));
+                const glowSize = 3 + nodeComplexity * 0.8 * glow;
+                ctx.fillStyle = `rgba(168, 85, 247, ${0.3 + compressionRatio * 0.5})`;
+                ctx.beginPath(); ctx.arc(p.x, p.y, glowSize, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = `rgba(255, 255, 255, ${0.4 + glow * 0.6})`;
+                ctx.beginPath(); ctx.arc(p.x, p.y, 1.2, 0, Math.PI * 2); ctx.fill();
+              } else {
+                ctx.fillStyle = `rgba(59, 130, 246, 0.2)`;
+                ctx.beginPath(); ctx.arc(p.x, p.y, 0.8, 0, Math.PI * 2); ctx.fill();
+              }
+            }
+          }
+        }
+
+        // Overlay text
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.font = 'bold 10px monospace';
+        ctx.fillStyle = '#a855f7';
+        ctx.fillText(hadronLabel, 20, 30);
+        ctx.font = '9px monospace';
+        ctx.fillStyle = 'rgba(255,255,255,0.4)';
+        ctx.fillText(`Vacuum Compression: ${(compressionRatio * 100).toFixed(0)}%`, 20, 45);
+        ctx.fillText(`Standing-Wave Eigen-Nodes: ${nodeComplexity.toFixed(0)} major axes`, 20, 60);
+        ctx.fillText(`Tensor algebra isomorphism: SU(3) product`, 20, 75);
+
+      } else if (simMode === 'exclusion') {
+        ctx.globalCompositeOperation = 'screen';
+        
+        // Spinor Cores rotation positions
+        const n1x = -nodeDistance / 2;
+        const n1y = Math.sin(t) * 10;
+        const n2x = nodeDistance / 2;
+        const n2y = -Math.sin(t) * 10;
+
+        let p1 = project3D(n1x, n1y, 0, cx, cy, 1.0);
+        let p2 = project3D(n2x, n2y, 0, cx, cy, 1.0);
+
+        const effectivePhase = berryPhaseDiff % (2 * Math.PI);
+        const isDestructive = Math.abs(effectivePhase - Math.PI) < 0.8;
+        const isVeryClose = nodeDistance < 130;
+
+        // Draw Wave rings Node 1
+        for (let r = 15; r < 90; r += 20) {
+          ctx.strokeStyle = `rgba(59, 130, 246, ${0.4 - r/200})`;
+          ctx.lineWidth = 1.5;
+          ctx.beginPath(); ctx.arc(p1.x, p1.y, r, 0, Math.PI * 2); ctx.stroke();
+          
+          const angle = t * 2 + (r * 0.1);
+          ctx.fillStyle = '#60a5fa';
+          ctx.beginPath(); ctx.arc(p1.x + Math.cos(angle) * r, p1.y + Math.sin(angle) * r, 2.5, 0, Math.PI * 2); ctx.fill();
+        }
+
+        // Draw Wave rings Node 2
+        for (let r = 15; r < 90; r += 20) {
+          ctx.strokeStyle = `rgba(16, 185, 129, ${0.4 - r/200})`;
+          ctx.lineWidth = 1.5;
+          ctx.beginPath(); ctx.arc(p2.x, p2.y, r, 0, Math.PI * 2); ctx.stroke();
+          
+          const angle = t * 2 + (r * 0.1) + berryPhaseDiff;
+          ctx.fillStyle = '#34d399';
+          ctx.beginPath(); ctx.arc(p2.x + Math.cos(angle) * r, p2.y + Math.sin(angle) * r, 2.5, 0, Math.PI * 2); ctx.fill();
+        }
+
+        // Draw Spinor Cores (source-over)
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(p1.x, p1.y, 6, 0, Math.PI * 2);
+        ctx.arc(p2.x, p2.y, 6, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.font = 'bold 9px sans-serif';
+        ctx.fillStyle = '#60a5fa';
+        ctx.fillText("\u03a8\u2081 (Spinor)", p1.x - 22, p1.y - 12);
+        ctx.fillStyle = '#34d399';
+        ctx.fillText("\u03a8\u2082 (Spinor)", p2.x - 22, p2.y - 12);
+
+        // Exclusion Force field warning
+        if (isVeryClose && isDestructive) {
+          const midX = (p1.x + p2.x) / 2;
+          const midY = (p1.y + p2.y) / 2;
+          const overlap = 90 - (nodeDistance / 2);
+
+          ctx.globalCompositeOperation = 'screen';
+          const grad = ctx.createRadialGradient(midX, midY, 0, midX, midY, overlap * 2.5);
+          grad.addColorStop(0, 'rgba(239, 68, 68, 0.8)');
+          grad.addColorStop(0.4, 'rgba(239, 68, 68, 0.3)');
+          grad.addColorStop(1, 'rgba(0,0,0,0)');
+          ctx.fillStyle = grad;
+          ctx.beginPath(); ctx.arc(midX, midY, overlap * 2.5, 0, Math.PI * 2); ctx.fill();
+
+          ctx.strokeStyle = '#f87171';
+          ctx.lineWidth = 2.5;
+          ctx.beginPath();
+          ctx.moveTo(midX, midY - overlap * 1.2);
+          ctx.lineTo(midX, midY + overlap * 1.2);
+          ctx.stroke();
+
+          // Physical Jitter pushback effect
+          p1.x -= Math.random() * 2;
+          p2.x += Math.random() * 2;
+
+          ctx.globalCompositeOperation = 'source-over';
+          ctx.fillStyle = '#f87171';
+          ctx.font = 'bold 10px monospace';
+          ctx.fillText("PHASE CANCELATION WARNING!", cx - 80, cy + 90);
+          ctx.font = '9px monospace';
+          ctx.fillStyle = 'rgba(255,255,255,0.5)';
+          ctx.fillText(`Exclusion Pressure: \u2207_\u03bb(\u03c1 u^\u03bb) \u2192 \u221e`, cx - 80, cy + 105);
+
+          // Spawn exclusion sparks
+          if (frameCount % 3 === 0) {
+            particles.push({
+              x: midX + (Math.random() - 0.5) * 10,
+              y: midY + (Math.random() - 0.5) * 40,
+              vx: (Math.random() - 0.5) * 4,
+              vy: (Math.random() - 0.5) * 12,
+              size: 1 + Math.random() * 2,
+              color: '#fbbf24',
+              alpha: 1.0,
+              life: 0.6
+            });
+          }
+        }
+
+        // Draw sparks particles
+        ctx.globalCompositeOperation = 'screen';
+        particles.forEach((p) => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.life -= 0.03;
+          p.alpha = Math.max(0, p.life);
+
+          ctx.fillStyle = `rgba(251, 191, 36, ${p.alpha})`;
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
+        });
+        particles = particles.filter(p => p.life > 0);
+
+        // Overlay text
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.font = '9px monospace';
+        ctx.fillStyle = 'rgba(255,255,255,0.4)';
+        ctx.fillText(`Spinor Winding: 4\u03c0 (720\u00b0) symmetry`, 20, 30);
+        const currentRotation = Math.round((berryPhaseDiff * 2 * 180) / Math.PI);
+        ctx.fillText(`Spatial Rotation: ${currentRotation}\u00b0 \u2192 Phase Discordance (\u0394\u03b8): ${(berryPhaseDiff * 180 / Math.PI).toFixed(0)}\u00b0`, 20, 45);
+        ctx.fillText(`Destructive overlap: ${isDestructive ? "MAX (Pauli Force active)" : "NONE"}`, 20, 60);
+      }
+
+      requestAnimationFrame(animate);
+    }
+    
+    // Start Loop
+    animate();
+  </script>
 </body>
 </html>

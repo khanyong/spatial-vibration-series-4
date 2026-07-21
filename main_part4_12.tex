@@ -1,0 +1,144 @@
+% !TEX root = main_part4_12.tex
+\documentclass[reprint,amsmath,amssymb,aps,prd]{revtex4-2}
+
+\usepackage{graphicx}
+\usepackage{dcolumn}
+\usepackage{bm}
+\usepackage{hyperref}
+
+\begin{document}
+
+\title{Mechanics of Spatial Vibration IV: Conceptual Topological Analogies for Hadronic Structure and Symmetries}
+
+\author{Kwang Yong Yoo}
+\email{khanyong.yoo@gmail.com}
+\affiliation{Independent Researcher}
+
+\date{\today}
+
+\begin{abstract}
+Quantum Chromodynamics (QCD) describes hadrons microscopically in terms of quark and gluon fields carrying local $SU(3)_c$ color degrees of freedom, while approximate $SU(3)_f$ flavor symmetry organizes many low-energy hadron multiplets. This paper explores whether selected hadronic features may also admit a complementary geometric description in terms of topologically nontrivial collective configurations. Extending the \textbf{`Geometrical Fluctuation of Space'} (Part I) and the \textbf{`Spatial Vibration Tensor'} (Part II) frameworks, we present a collection of conceptual topological analogies within the spatial-vibration picture.
+
+Rather than offering a complete quantitative field-theoretic derivation, we introduce distinct topological structures. We use a fluid-helicity functional as an analogy to topological linking, representing the persistence of linked flux configurations in an ideal-flow setting. Under the joint phenomenological assumptions that the flux-tube cross-section remains approximately constant and the integrated longitudinal stress is approximately uniform, extending a spatial configuration yields a potential energy that increases linearly with separation. This offers a mechanical analog to nonperturbative flux-tube behavior before the onset of string breaking. Furthermore, avoiding a direct identification of spatial dimensions with internal symmetries, we postulate an effective representation ansatz of internal collective-mode components to reproduce composite representation patterns of flavor $SU(3)_f$ multiplets.
+
+Addressing topological classification, we employ the Skyrme-type identification of an integer 3D winding number with low-energy baryon number as an effective-model correspondence, explicitly imposing the necessary boundary condition at spatial infinity, $U(|\mathbf{x}| \to \infty) \to I$, for one-point compactification. We clarify that this Skyrme-type topology is distinct from Hopf-type fluid helicity linking. Additionally, we discuss how configuration-space topology might permit spinorial states via Finkelstein-Rubinstein constraints, though the existence of such topology remains to be explicitly demonstrated. We emphasize that topological nontriviality alone does not guarantee energetic stability; these analogies identify candidate structures that could guide the construction of a future field-theoretic model based on spatial-vibration degrees of freedom, provided an explicit energy functional evading Derrick's scaling obstruction is established.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+\subsection{Standard Model Symmetries and Topological Perspectives}
+Quantum Chromodynamics (QCD) describes hadrons microscopically in terms of quark and gluon fields carrying local $SU(3)_c$ color degrees of freedom \cite{Workman2022}, while approximate $SU(3)_f$ flavor symmetry organizes many low-energy hadron multiplets \cite{GellMann1964}. QCD governs short-distance strong-interaction behavior through asymptotic freedom \cite{Gross1973}. Concurrently, exploring non-linear topological solitonic models---such as Skyrmions \cite{Skyrme1961, Adkins1983} or Faddeev-Niemi knots \cite{Faddeev1997}---remains a legitimate physical pursuit to elucidate alternative low-energy geometric descriptions of particle structures.
+
+In this conceptual framework, we extend the geomechanical hypotheses developed in the \textit{Mechanics of Spatial Vibration} trilogy \cite{YooPart1, YooPart2, YooPart3}. We explore whether hadrons may admit an alternative low-energy description as topologically nontrivial collective configurations. These candidate configurations, collectively termed \textbf{`Topological Tensor Configurations'}, may include knot-like flux structures as well as Skyrme-type winding textures.
+
+\subsection{Objectives and Scope: A Collection of Analogies}
+Based on the \textbf{`Geometrical Fluctuation of Space'} hypothesis (Part I) \cite{YooPart1} and the phenomenological \textbf{`Spatial Vibration Tensor'} ($\tilde{V}_{\mu\nu}$) framework (Part II) \cite{YooPart2}, this paper proposes a qualitative topological framework.
+
+We emphasize that this paper does not construct a single, unified Lorentz-covariant effective field theory. The mathematical objects introduced---fluid velocity ($\mathbf{v}$), phenomenological longitudinal stress ($S_{\parallel\parallel}$), effective flavor collective modes ($\Psi_{\mathrm{topo}}$), and the Skyrme-type field ($U$)---are treated as separate topological analogies. Establishing a fundamental field that rigorously connects these distinct variables remains an open task. Furthermore, we recognize that topological nontriviality alone does not guarantee energetic stability or a finite equilibrium size; such properties require an explicit energy functional whose competing terms evade Derrick's scaling obstruction \cite{Derrick1964} and admit a finite-size stationary energy minimum. Our objective is to demonstrate that selected hadronic properties can be qualitatively modeled through a collection of geometric analogies.
+
+\section{Flux-Stability and Geometric Tension Analogies}
+
+Before the onset of string breaking \cite{Bali2005}, the static quark-antiquark energy exhibits an approximately linear confining regime, $V(r) \sim \sigma r$, associated with nonperturbative flux-tube behavior \cite{Wilson1974}. We explore mechanical analogies for this phenomenon.
+
+\subsection{Fluid Helicity as a Flux-Stability Analogy}
+When extreme energy twists the spatial tensor fluid, knot-like flux configurations may form. Defining the fluid velocity as $\mathbf{v}$ and vorticity as $\boldsymbol{\omega} = \nabla \times \mathbf{v}$, we use the fluid-helicity functional \cite{Moffatt1969} as an analogy to topological linking:
+\begin{equation}
+\mathcal{H}_{\mathrm{fluid}} = \int \mathbf{v} \cdot \boldsymbol{\omega} \, d^3x
+\end{equation}
+For idealized thin, closed vortex tubes with fixed circulations and suitable boundary conditions, the helicity can be related to Gauss linking numbers and self-linking contributions. The helicity functional itself is not generally integer-valued. In an ideal-flow setting where helicity is conserved, this relation motivates an analogy for the persistence of linked flux configurations. The present tensor-fluid framework does not yet derive the required conservation law.
+
+\subsection{Constant Tension Ansatz and Linear Potential}
+Motivated by flux-preserving soliton models, we impose a constant cross-section ($A(s)$) of the flux tube as a phenomenological ansatz. 
+
+Under the joint assumptions that the flux-tube cross-section remains approximately constant and that the integrated longitudinal stress ($S_{\parallel\parallel}$) is approximately uniform along the tube's longitudinal coordinate ($s$), we define the tension $\mathcal{T}(s)$:
+\begin{equation}
+\mathcal{T}(s) = \int_{A(s)} S_{\parallel\parallel}(s, \mathbf{x}_\perp) \, dA \approx \sigma_{\mathrm{model}}
+\end{equation}
+Integrating this constant tension over the separation distance $r$ yields a potential energy that increases linearly:
+\begin{equation}
+V(r) = \int_0^r \mathcal{T}(s) \, ds \approx \sigma_{\mathrm{model}} r
+\end{equation}
+This serves strictly as a mechanical analogy for the linear energy growth prior to string breaking \cite{Bali2005}.
+
+\subsection{A Phenomenological Short-Distance Core Softening}
+We distinguish the intersource separation distance $r$ from the core radial coordinate $\rho$ of the topological knot. Under the cancellation ansatz introduced in Part I, after regularization, the singular kinetic and geometric contributions are assumed to cancel at leading order, leaving a reduced finite effective core stress as $\rho \to 0$ ($\mathcal{T}_{\mathrm{core}}(\rho) \to 0$).
+
+This framework-specific hypothesis should not be interpreted as a derivation or effective description of QCD asymptotic freedom \cite{Gross1973}; it represents only a phenomenological short-distance core-softening behavior within the proposed mechanical analogy.
+
+\section{Representation Ansatz for Hadronic Flavor Multiplets}
+
+We restrict our geometric analogy strictly to the effective hadronic-level representation of approximate global $SU(3)_f$ flavor symmetries, avoiding a direct identification of physical spatial axes with internal symmetries.
+
+\subsection{Effective Flavor Multiplet Ansatz}
+We assume, rather than derive, three internal collective-mode components associated with the same topological sector. We define an effective collective-mode multiplet $\Psi_{\mathrm{topo}} = (\psi_1, \psi_2, \psi_3)^T$ and postulate a representation ansatz where it transforms under an effective $SU(3)_f$ group:
+\begin{equation}
+\Psi_{\mathrm{topo}} \rightarrow U_f \Psi_{\mathrm{topo}}, \quad U_f \in SU(3)_f
+\end{equation}
+Under this ansatz, their tensor products reproduce the composite representation patterns. For baryons, the triple product yields the octet and decuplet decomposition:
+\begin{equation}
+\mathbf{3}_{\mathrm{topo}} \otimes \mathbf{3}_{\mathrm{topo}} \otimes \mathbf{3}_{\mathrm{topo}} \to \mathbf{10} \oplus \mathbf{8} \oplus \mathbf{8} \oplus \mathbf{1}
+\end{equation}
+Mesonic multiplets are described by introducing $\bar{\Psi}_{\mathrm{topo}}$, denoting the complex-conjugate collective-mode representation, transforming as $\bar{\Psi}_{\mathrm{topo}} \rightarrow \bar{\Psi}_{\mathrm{topo}} U_f^\dagger$. It is introduced as the effective counterpart of an antiflavor component:
+\begin{equation}
+\mathbf{3}_{\mathrm{topo}} \otimes \bar{\mathbf{3}}_{\mathrm{topo}} \to \mathbf{8} \oplus \mathbf{1}
+\end{equation}
+No microscopic tensor-fluid realization of this conjugate mode is derived at the present stage. Thus, Gell-Mann's flavor-multiplet classification \cite{GellMann1964} is reproduced at the level of the assumed collective-mode representation. Future modifications, such as introducing symmetry-breaking terms ($\Delta H \sim \bar{\Psi}_{\mathrm{topo}} M \Psi_{\mathrm{topo}}$ with $M = \mathrm{diag}(\delta_1, \delta_2, \delta_3)$), may be considered to account for empirical mass splittings.
+
+\subsection{Configuration-Space Topology and Spinorial Quantization}
+For certain soliton configuration spaces, a spatial $2\pi$ rotation may correspond to a non-contractible loop. If the quantized wavefunction is assigned the nontrivial Finkelstein-Rubinstein sign on this loop \cite{Finkelstein1968}, a $4\pi$ ($720^\circ$) rotation is required to restore the original quantum state.
+
+Whether the proposed topological tensor configurations possess the required nontrivial fundamental group ($\pi_1(\mathcal{C})$) and whether a $2\pi$ rotational loop carries the nontrivial FR sign remain to be demonstrated. We present this topological property solely as a geometric prerequisite for possible spinorial quantization, acknowledging that it does not by itself derive Fermi-Dirac statistics \cite{Pauli1925}.
+
+\section{Baryon Number and Skyrme-Type Winding Topology}
+
+To align our framework with established non-perturbative solitonic models, we formalize the topological classification using Skyrme-type topology \cite{Skyrme1961, Adkins1983}.
+
+We employ the Skyrme-type identification of an integer 3D winding number of a finite-energy field ($U$) with the low-energy baryon number as an effective-model correspondence:
+\begin{equation}
+B = -\frac{1}{24\pi^2} \int d^3x \, \epsilon^{ijk} \mathrm{Tr}(L_i L_j L_k) = n \quad (n \in \mathbb{Z})
+\end{equation}
+where $L_i = U^\dagger \partial_i U$. Finite energy requires explicitly imposing the boundary condition at spatial infinity, $U(|\mathbf{x}| \to \infty) \to I$, allowing the one-point compactification $\mathbb{R}^3 \cup \{\infty\} \simeq S^3$. For $N \ge 2$, the resulting maps are classified by the homotopy group $\pi_3(SU(N)) = \mathbb{Z}$.
+
+Within the Skyrme-type field sector, $B$ is an exactly conserved integer winding number under smooth finite-energy evolution. Its identification with the physical low-energy baryon number is adopted here strictly as an effective-model correspondence. 
+
+Crucially, the $SU(N)$ target space used to define the Skyrme-type winding number is not identified here with the effective $SU(3)_f$ collective-mode representation ($\Psi_{\mathrm{topo}}$) introduced in the preceding section. Establishing a dynamical relation between these structures remains a separate open problem. The fluid-helicity analogy and the Skyrme-type baryon winding number represent distinct topological structures in the present framework. We do not identify them.
+
+\section{Conclusion}
+
+In this concluding Part IV, we have presented a \textbf{collection of conceptual topological analogies} to heuristically explore hadronic structures, seeking a geometric interpretation of internal degrees of freedom without interpreting symmetry spaces as additional literal spatial dimensions.
+
+To respect rigorous physical constraints, we explicitly refined the scope of our analogies:
+\begin{itemize}
+    \item We restricted our analogy to an effective representation ansatz ($\Psi_{\mathrm{topo}}$) reproducing approximate \textbf{flavor $SU(3)_f$} multiplet patterns for baryons and mesons, without claiming a dynamical derivation of the symmetry.
+    \item We adopted the effective correspondence between the physical low-energy \textbf{baryon number} and the mathematical 3D winding number of a finite-energy field ($U$), explicitly imposing the necessary boundary condition at spatial infinity ($U(|\mathbf{x}| \to \infty) \to I$) for one-point compactification \cite{Skyrme1961}. We explicitly separated this $SU(N)$ target space from the $SU(3)_f$ flavor ansatz.
+    \item We clarified that possible spinorial states require non-trivial configuration-space topology and Finkelstein-Rubinstein constraints \cite{Finkelstein1968}, rather than automatically emerging from generic spatial rotations.
+    \item Analogies for linear potential energy and core softening were presented strictly as qualitative mechanical parallels to nonperturbative flux-tube dynamics (prior to string breaking) and a generic short-distance core softening ($\rho \to 0$), explicitly decoupled from QCD asymptotic freedom.
+\end{itemize}
+
+This conceptual framework does not presently supply a unified Lorentz-covariant action or explicit field equations. The mathematical objects $\mathbf{v}, S_{\parallel\parallel}, \Psi_{\mathrm{topo}}$, and $U$ currently stand as a collection of separate topological analogies. Additionally, topological nontriviality does not ensure energetic soliton stability without an explicit energy functional that evades Derrick-type scaling collapse \cite{Derrick1964}. Nevertheless, the framework identifies several distinct topological structures that could guide the construction of a future, unified field-theoretic model based on spatial-vibration degrees of freedom.
+
+\vspace{1em}
+\section*{ACKNOWLEDGMENTS}
+\textbf{Note on Authorship:} This work was authored by Kwang Yong Yoo. AI-assisted tools (Gemini) were used for language refinement and simulation development support. This study is an independent research work conducted under the author's sole academic responsibility. Interactive simulations and supplementary materials are officially archived under DOI: \href{https://doi.org/10.5281/zenodo.21438016}{10.5281/zenodo.21438016}.
+
+\begin{thebibliography}{99}
+\bibitem{Workman2022} R. L. Workman \textit{et al.} (Particle Data Group), Review of Particle Physics, \textit{Prog. Theor. Exp. Phys.} \textbf{2022}, 083C01 (2022).
+\bibitem{GellMann1964} M. Gell-Mann, A Schematic Model of Baryons and Mesons, \textit{Phys. Lett.} \textbf{8}, 214 (1964).
+\bibitem{Gross1973} D. J. Gross and F. Wilczek, Ultraviolet Behavior of Non-Abelian Gauge Theories, \textit{Phys. Rev. Lett.} \textbf{30}, 1343 (1973).
+\bibitem{Wilson1974} K. G. Wilson, Confinement of Quarks, \textit{Phys. Rev. D} \textbf{10}, 2445 (1974).
+\bibitem{Bali2005} G. S. Bali \textit{et al.} (SESAM Collaboration), Observation of string breaking in QCD, \textit{Phys. Rev. D} \textbf{71}, 114513 (2005).
+\bibitem{Skyrme1961} T. H. R. Skyrme, A Non-Linear Field Theory, \textit{Proc. Roy. Soc. Lond. A} \textbf{260}, 127 (1961).
+\bibitem{Adkins1983} G. S. Adkins, C. R. Nappi, and E. Witten, Static Properties of Nucleons in the Skyrme Model, \textit{Nucl. Phys. B} \textbf{228}, 552 (1983).
+\bibitem{Faddeev1997} L. Faddeev and A. J. Niemi, Stable knot-like structures in classical field theory, \textit{Nature} \textbf{387}, 58 (1997).
+\bibitem{Derrick1964} G. H. Derrick, Comments on nonlinear wave equations as models for elementary particles, \textit{J. Math. Phys.} \textbf{5}, 1252 (1964).
+\bibitem{Moffatt1969} H. K. Moffatt, The Degree of Knottedness of Tangled Vortex Lines, \textit{J. Fluid Mech.} \textbf{35}, 117 (1969).
+\bibitem{Finkelstein1968} D. Finkelstein and J. Rubinstein, Connection between Spin, Statistics, and Kinks, \textit{J. Math. Phys.} \textbf{9}, 1762 (1968).
+\bibitem{Pauli1925} W. Pauli, \"{U}ber den Zusammenhang des Abschlusses der Elektronengruppen im Atom mit der Komplexstruktur der Spektren, \textit{Z. Phys.} \textbf{31}, 765 (1925).
+\bibitem{YooPart1} K. Y. Yoo, \textit{Mechanics of Spatial Vibration I: A Geomechanical Reinterpretation of Wave-Particle Duality and Phase Turbulence in Quantum Decoherence}, Zenodo. \url{https://doi.org/10.5281/zenodo.21206211} (2026).
+\bibitem{YooPart2} K. Y. Yoo, \textit{Mechanics of Spatial Vibration II: Interaction of Macroscopic Gravity with Microscopic Vibration and a Unified Dark Fluid Model}, Zenodo. \url{https://doi.org/10.5281/zenodo.21233252} (2026).
+\bibitem{YooPart3} K. Y. Yoo, \textit{Mechanics of Spatial Vibration III: Cosmological Spatial Plate Tectonics and Wave Interference Topology}, Zenodo. \url{https://doi.org/10.5281/zenodo.21258029} (2026).
+\end{thebibliography}
+
+\end{document}

@@ -238,13 +238,13 @@ export const SimulationWidget_V4: React.FC<{ initialMode?: 'knot' | 'su3' | 'exc
             }
           });
 
-          // Draw flux tension lines showing Asymptotic Freedom in the core
+          // Draw flux tension lines showing Short-Distance Core Softening
           ctx.globalCompositeOperation = 'source-over';
           ctx.font = '9px monospace';
           ctx.fillStyle = 'rgba(255,255,255,0.4)';
-          ctx.fillText(`Knot helicity: H = 1.0 (h_0)`, 20, 30);
-          ctx.fillText(`Effective Tension (T): ${currentTension.toFixed(2)} N`, 20, 45);
-          ctx.fillText(`Core Potential (Q_s): canceled (T -> 0)`, 20, 60);
+          ctx.fillText(`Fluid Helicity: H_fluid = 1.0 (h_0)`, 20, 30);
+          ctx.fillText(`Model Tension (T_model): ${currentTension.toFixed(2)} N`, 20, 45);
+          ctx.fillText(`Core Softening: T_core(\u03c1) \u2192 0 (\u03c1 \u2192 0)`, 20, 60);
 
         } else {
           // --- RENDER HADRONIZATION (SPLIT KNOTS) ---
@@ -538,8 +538,8 @@ export const SimulationWidget_V4: React.FC<{ initialMode?: 'knot' | 'su3' | 'exc
         ctx.font = '9px monospace';
         ctx.fillStyle = 'rgba(255,255,255,0.4)';
         ctx.fillText(`Vacuum Compression: ${(compressionRatio * 100).toFixed(0)}%`, 20, 45);
-        ctx.fillText(`Standing-Wave Eigen-Nodes: ${nodeComplexity.toFixed(0)} major axes`, 20, 60);
-        ctx.fillText("Emergent SU(3) from collective 3D topological defects", 20, 75);
+        ctx.fillText(`Effective Collective Modes (\u03a8_topo): ${nodeComplexity.toFixed(0)} components`, 20, 60);
+        ctx.fillText("Effective Flavor SU(3)_f Multiplet Ansatz", 20, 75);
 
       } else if (simMode === 'exclusion') {
         // ==========================================
@@ -669,9 +669,9 @@ export const SimulationWidget_V4: React.FC<{ initialMode?: 'knot' | 'su3' | 'exc
         ctx.globalCompositeOperation = 'source-over';
         ctx.font = '9px monospace';
         ctx.fillStyle = 'rgba(255,255,255,0.4)';
-        ctx.fillText(`Spinor Winding: 4\u03c0 (720\u00b0) symmetry`, 20, 30);
+        ctx.fillText(`Finkelstein-Rubinstein Constraint (4\u03c0 loop)`, 20, 30);
         ctx.fillText(`Spatial Rotation (\u03b8): ${(berryPhaseDiff * 2 * 180 / Math.PI).toFixed(0)}\u00b0 \u2192 Phase Discordance (\u0394\u03b8): ${(berryPhaseDiff * 180 / Math.PI).toFixed(0)}\u00b0`, 20, 45);
-        ctx.fillText(`Destructive overlap: ${isDestructive ? "MAX (Pauli Force active)" : "NONE"}`, 20, 60);
+        ctx.fillText(`Destructive overlap: ${isDestructive ? "MAX (Exclusion active)" : "NONE"}`, 20, 60);
       }
 
       animId = requestAnimationFrame(render);
@@ -743,7 +743,7 @@ export const SimulationWidget_V4: React.FC<{ initialMode?: 'knot' | 'su3' | 'exc
 
             <div className="flex flex-col gap-1.5">
               <div className="flex justify-between text-xs font-mono">
-                <span className="text-zinc-400">Geometric Mass Rigidity (&kappa;):</span>
+                <span className="text-zinc-400">Geometric Mass Rigidity (\u03ba):</span>
                 <span className="text-zinc-300 font-bold">{massRigidity.toFixed(1)}</span>
               </div>
               <input
@@ -827,8 +827,8 @@ export const SimulationWidget_V4: React.FC<{ initialMode?: 'knot' | 'su3' | 'exc
 
             <div className="flex flex-col gap-1.5">
               <div className="flex justify-between text-xs font-mono">
-                <span className="text-zinc-400">Spatial Rotation Angle (&theta;):</span>
-                <span className="text-[#34d399] font-bold">{(berryPhaseDiff * 2 * 180 / Math.PI).toFixed(0)}&deg;</span>
+                <span className="text-zinc-400">Spatial Rotation Angle (\u03b8):</span>
+                <span className="text-[#34d399] font-bold">{(berryPhaseDiff * 2 * 180 / Math.PI).toFixed(0)}\u00b0</span>
               </div>
               <input
                 type="range"
@@ -843,7 +843,7 @@ export const SimulationWidget_V4: React.FC<{ initialMode?: 'knot' | 'su3' | 'exc
             <div className="text-[10px] text-zinc-500 font-mono leading-relaxed pt-2 border-t border-zinc-800/60">
               {nodeDistance < 130 && Math.abs((berryPhaseDiff % (2 * Math.PI)) - Math.PI) < 0.8 ? (
                 <span className="text-red-400 font-bold">
-                  &nbsp; Destructive phase interference detected. Orthogonal spinor phases demand infinite topological deformation energy.
+                  ⚠️ Destructive phase interference detected. Orthogonal spinor phases demand infinite topological deformation energy.
                 </span>
               ) : (
                 <span>Cores occupy independent spatial metrics unless phase interference demands a deformation barrier.</span>

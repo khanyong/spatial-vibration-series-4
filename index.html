@@ -686,13 +686,13 @@
             }
           });
 
-          // Overlay texts
+          // Overlay texts (Short-Distance Core Softening)
           ctx.globalCompositeOperation = 'source-over';
           ctx.font = '9px monospace';
           ctx.fillStyle = 'rgba(255,255,255,0.4)';
-          ctx.fillText(`Knot helicity: H = 1.0 (h_0)`, 20, 30);
-          ctx.fillText(`Effective Tension (T): ${currentTension.toFixed(2)} N`, 20, 45);
-          ctx.fillText(`Core Potential (Q_s): canceled (T -> 0)`, 20, 60);
+          ctx.fillText(`Fluid Helicity: H_fluid = 1.0 (h_0)`, 20, 30);
+          ctx.fillText(`Model Tension (T_model): ${currentTension.toFixed(2)} N`, 20, 45);
+          ctx.fillText(`Core Softening: T_core(\u03c1) \u2192 0 (\u03c1 \u2192 0)`, 20, 60);
 
         } else {
           // Render rupture (confinement restored)
@@ -962,8 +962,8 @@
         ctx.font = '9px monospace';
         ctx.fillStyle = 'rgba(255,255,255,0.4)';
         ctx.fillText(`Vacuum Compression: ${(compressionRatio * 100).toFixed(0)}%`, 20, 45);
-        ctx.fillText(`Standing-Wave Eigen-Nodes: ${nodeComplexity.toFixed(0)} major axes`, 20, 60);
-        ctx.fillText("Emergent SU(3) from collective 3D topological defects", 20, 75);
+        ctx.fillText(`Effective Collective Modes (\u03a8_topo): ${nodeComplexity.toFixed(0)} components`, 20, 60);
+        ctx.fillText("Effective Flavor SU(3)_f Multiplet Ansatz", 20, 75);
 
       } else if (simMode === 'exclusion') {
         ctx.globalCompositeOperation = 'screen';
@@ -1082,10 +1082,10 @@
         ctx.globalCompositeOperation = 'source-over';
         ctx.font = '9px monospace';
         ctx.fillStyle = 'rgba(255,255,255,0.4)';
-        ctx.fillText(`Spinor Winding: 4\u03c0 (720\u00b0) symmetry`, 20, 30);
+        ctx.fillText(`Finkelstein-Rubinstein Constraint (4\u03c0 loop)`, 20, 30);
         const currentRotation = Math.round((berryPhaseDiff * 2 * 180) / Math.PI);
         ctx.fillText(`Spatial Rotation: ${currentRotation}\u00b0 \u2192 Phase Discordance (\u0394\u03b8): ${(berryPhaseDiff * 180 / Math.PI).toFixed(0)}\u00b0`, 20, 45);
-        ctx.fillText(`Destructive overlap: ${isDestructive ? "MAX (Pauli Force active)" : "NONE"}`, 20, 60);
+        ctx.fillText(`Destructive overlap: ${isDestructive ? "MAX (Exclusion active)" : "NONE"}`, 20, 60);
       }
 
       requestAnimationFrame(animate);

@@ -307,9 +307,9 @@ export const SimulationWidget_V4: React.FC<{ initialMode?: 'knot' | 'su3' | 'exc
           ctx.globalCompositeOperation = 'source-over';
           ctx.font = '9px monospace';
           ctx.fillStyle = 'rgba(255,255,255,0.4)';
-          ctx.fillText(`Topology Severed: Color Confinement Restored`, 20, 30);
-          ctx.fillText(`Yield Energy (E_crit) Released as W/Z Boson Tensor Shockwave`, 20, 45);
-          ctx.fillText(`New boundaries formed: H1 = 1, H2 = 1`, 20, 60);
+          ctx.fillText(`String Breaking: Static-Light Meson Pair Production`, 20, 30);
+          ctx.fillText(`Yield Energy (E_crit) Analogous to Tensor Shockwave`, 20, 45);
+          ctx.fillText(`New topological boundaries formed (H1, H2)`, 20, 60);
         }
 
         // Update & draw rupture particles
@@ -631,10 +631,10 @@ export const SimulationWidget_V4: React.FC<{ initialMode?: 'knot' | 'su3' | 'exc
 
           ctx.fillStyle = '#f87171';
           ctx.font = 'bold 10px monospace';
-          ctx.fillText("PHASE CANCELATION WARNING!", cx - 80, cy + 90);
+          ctx.fillText("TOPOLOGICAL DEFORMATION WARNING!", cx - 80, cy + 90);
           ctx.font = '9px monospace';
           ctx.fillStyle = 'rgba(255,255,255,0.5)';
-          ctx.fillText(`Topological Energy Barrier: \u0394E_topo \u2192 \u221e`, cx - 80, cy + 105);
+          ctx.fillText(`Energy Barrier: \u0394E_topo \u2192 \u221e`, cx - 80, cy + 105);
 
           if (frameCountRef.current % 3 === 0) {
             particlesRef.current.push({
@@ -671,7 +671,7 @@ export const SimulationWidget_V4: React.FC<{ initialMode?: 'knot' | 'su3' | 'exc
         ctx.fillStyle = 'rgba(255,255,255,0.4)';
         ctx.fillText(`Finkelstein-Rubinstein Constraint (4\u03c0 loop)`, 20, 30);
         ctx.fillText(`Spatial Rotation (\u03b8): ${(berryPhaseDiff * 2 * 180 / Math.PI).toFixed(0)}\u00b0 \u2192 Phase Discordance (\u0394\u03b8): ${(berryPhaseDiff * 180 / Math.PI).toFixed(0)}\u00b0`, 20, 45);
-        ctx.fillText(`Destructive overlap: ${isDestructive ? "MAX (Exclusion active)" : "NONE"}`, 20, 60);
+        ctx.fillText(`Destructive overlap: ${isDestructive ? "MAX (Deformation Barrier)" : "NONE"}`, 20, 60);
       }
 
       animId = requestAnimationFrame(render);
